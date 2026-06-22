@@ -1,6 +1,7 @@
 const express = require("express");
 const stompit = require("stompit");
 const async = require("async");
+const WebSocket = require("ws");
 require("dotenv").config();
 
 const app = express();
@@ -9,6 +10,12 @@ app.use(express.static("public"));
 
 app.listen(3000, () => {
     console.log("Listening on port 3000");
+});
+
+const wss = new WebSocket.Server({ port: 8080 });
+
+wss.on("connection", ws => {
+    console.log("Browser connected");
 });
 
 const username = process.env.CLIENT_USERNAME;
@@ -75,13 +82,23 @@ connectionManager.connect(function (error, client, reconnect) {
                 async.each(data,
                     function(item, next) {
                         // Look for Train Activation messages (msg_type 0001)
-                        if (item.header && item.header.msg_type === "0003") {
-                            console.log(
-                                "Train", 
-                                item.body.train_id, 
-                                "movement", 
-                                // item.body.tp_origin_stanox ? item.body.tp_origin_stanox : item.body.sched_origin_stanox
-                            );
+                        if (item.header && item.header.msg_type === "0001") {
+                            // console.log(
+                            //     "Train", 
+                            //     item.body.train_id, 
+                            //     "movement", 
+                            //     item.body.tp_origin_stanox ? item.body.tp_origin_stanox : item.body.sched_origin_stanox
+                            // );
+                            const trainMessage = {
+                                trainId: item.body.train_id,
+                                stanox: item.body.tp_origin_stanox
+                            };
+
+                            wss.clients.forEach(client => {
+                                if (client.readyState === WebSocket.OPEN) {
+                                    client.send(JSON.stringify(trainMessage));
+                                }
+                            });
                         }
                         next();
                     }
