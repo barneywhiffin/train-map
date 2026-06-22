@@ -4,6 +4,9 @@ const async = require("async");
 const WebSocket = require("ws");
 require("dotenv").config();
 
+// Express is responsible for getting the application into the browser
+// WebSockets are responsible for streaming live updates after the page has loaded
+
 const app = express();
 
 app.use(express.static("public"));
