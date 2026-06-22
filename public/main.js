@@ -1,4 +1,14 @@
-const socket = new WebSocket("ws://localhost:3000");
+const socketUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'ws://localhost:3000'
+    : 'wss://barneywhiffin.github.io/train-map';
+
+// need to deploy websocket server to the cloud for this to work....
+
+const socket = new WebSocket(socketUrl);
+
+socket.onopen = () => {
+    console.log(`Connected to WebSocket at: ${socketUrl}`);
+};
 
 socket.addEventListener("message", event => {
 
