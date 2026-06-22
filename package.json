@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "async": "^3.2.6",
     "dotenv": "^17.4.2",
     "stompit": "^1.0.0"
   }
