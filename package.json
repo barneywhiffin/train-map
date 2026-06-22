@@ -1,4 +1,8 @@
 {
+  "name": "train-map",
+  "scripts": {
+    "start": "cd server && node index.js"
+  },
   "dependencies": {
     "async": "^3.2.6",
     "dotenv": "^17.4.2",
