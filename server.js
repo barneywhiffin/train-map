@@ -11,11 +11,11 @@ const app = express();
 
 app.use(express.static("public"));
 
-app.listen(3000, () => {
+const server = app.listen(3000, () => {
     console.log("Listening on port 3000");
 });
 
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({ server });
 
 wss.on("connection", ws => {
     console.log("Browser connected");
