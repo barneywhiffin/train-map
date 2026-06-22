@@ -86,12 +86,12 @@ connectionManager.connect(function (error, client, reconnect) {
                             // console.log(
                             //     "Train", 
                             //     item.body.train_id, 
-                            //     "movement", 
+                            //     "activated at stanox", 
                             //     item.body.tp_origin_stanox ? item.body.tp_origin_stanox : item.body.sched_origin_stanox
                             // );
                             const trainMessage = {
                                 trainId: item.body.train_id,
-                                stanox: item.body.tp_origin_stanox
+                                stanox: item.body.tp_origin_stanox ? item.body.tp_origin_stanox : item.body.sched_origin_stanox
                             };
 
                             wss.clients.forEach(client => {
