@@ -9,7 +9,7 @@ require("dotenv").config();
 
 const app = express();
 
-app.use(express.static("client"));
+app.use(express.static("docs"));
 
 const PORT = process.env.PORT || 3000;
 
@@ -31,7 +31,6 @@ const connectOptions = {
     port: 61618,
     connectHeaders: {
         "heart-beat": "15000,15000",// heart-beat of 15 seconds
-        "client-id": username,      // request a durable subscription - set this to the login name you use to subscribe
         host: "/",
         login: username,
         passcode: password   
@@ -62,7 +61,6 @@ connectionManager.connect(function (error, client, reconnect) {
     });
     const headers = {
         destination: "/topic/TRAIN_MVT_ALL_TOC",           // subscribe for a destination to which messages are sent
-        "activemq.subscriptionName": "somename-train_mvt", // request a durable subscription - set this to an unique string for each feed
         ack: "client-individual"                           // the client will send ACK frames individually for each message processed
     };
     
