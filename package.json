@@ -1,6 +1,6 @@
 {
-  "name": "train-map",
   "scripts": {
+    "build": "npm install",
     "start": "cd server && node index.js"
   },
   "dependencies": {
